@@ -145,7 +145,7 @@ for key in filename_label.keys():
     if arr.size == 0:
         continue
     print('Key: ', key)
-    print('Test patients: ', test_patients)
+    #print('Test patients: ', test_patients)
     # 20 percent is test 80 percent is training
     split_count = 0
     # go through all the patients
