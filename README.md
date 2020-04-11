@@ -18,6 +18,10 @@ Calling procedure :
 2. check rsna-pneumonia-detection-challenge folder is available at the current folder
 3. python generate_dataset.py
 
+Output : test.txt & train.txt  -> Object classifier
+	 test_yolo.txt & train_yolo.txt -> Object Detection labeled data
+	 Annotated data also copied to the image folder
+
 If you have any question or contribution, please contact with us through the email address:
 
 contact@mantiscope.com
