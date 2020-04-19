@@ -99,9 +99,11 @@ train_count = {'normal': 0, 'pneumonia': 0, 'COVID-19': 0}
 
 mapping = dict()
 mapping['COVID-19'] = 'COVID-19'
+mapping['COVID-19, ARDS'] = 'COVID-19'
 mapping['SARS'] = 'pneumonia'
 mapping['MERS'] = 'pneumonia'
 mapping['Streptococcus'] = 'pneumonia'
+mapping['Pneumocystis'] = 'pneumonia'
 mapping['Normal'] = 'normal'
 mapping['Lung Opacity'] = 'pneumonia'
 mapping['1'] = 'pneumonia'
@@ -111,7 +113,7 @@ split = 0.1
 
 # adapted from https://github.com/mlmed/torchxrayvision/blob/master/torchxrayvision/datasets.py#L814
 csv = pd.read_csv(csvpath, nrows=None)
-idx_pa = csv["view"] == "PA"  # Keep only the PA view
+idx_pa = csv["modality"] == "X-ray"  # Keep only the PA view
 csv = csv[idx_pa]
 
 pneumonias = ["COVID-19", "SARS", "MERS", "ARDS", "Streptococcus"]
@@ -150,7 +152,7 @@ for key in filename_label.keys():
     split_count = 0
     # go through all the patients
     for patient in arr:
-        if split_count %5 == 1:
+        if split_count %4 == 1:
             copyfile(os.path.join(imgpath, patient[1]), os.path.join(savepath, 'test', patient[1]))
             test.append(patient)
             test_count[patient[2]] += 1
@@ -161,7 +163,6 @@ for key in filename_label.keys():
         split_count = split_count +1
 print('test count: ', test_count)
 print('train count: ', train_count)
-
 
 print('starting to update the list...')
 # add normal and rest of pneumonia cases from https://www.kaggle.com/c/rsna-pneumonia-detection-challenge
@@ -216,7 +217,7 @@ for key in patients.keys():
         pixel_array_numpy = ds.pixel_array
         imgname = patient + '.png'
 	textname = patient + '.txt'
-        if count%5 == 0:
+        if count%4 == 0:
             cv2.imwrite(os.path.join(savepath, 'test', imgname), pixel_array_numpy)
 	    txt_outfile = open(savepath+'/test/'+textname, "w")
 	    txt_outfile.close()
