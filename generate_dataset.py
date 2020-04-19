@@ -305,33 +305,37 @@ print('Total length of test: ', len(test))
 
 # export to train and test csv
 # format as patientid, filename, label, separated by a space
+if os.path.isfile("train.txt"):
+    os.unlink("train.txt")
 train_file = open("train.txt","a") 
 for sample in train:
     info = str(sample[0]) + ' ' + sample[1] + ' ' + sample[2] + '\n'
     train_file.write(info)
-
 train_file.close()
 
+
+if os.path.isfile("test.txt"):
+    os.unlink("test.txt")
 test_file = open("test.txt", "a")
 for sample in test:
     info = str(sample[0]) + ' ' + sample[1] + ' ' + sample[2] + '\n'
     test_file.write(info)
-
 test_file.close()
 
-
+if os.path.isfile("train_yolo.txt"):
+    os.unlink("train_yolo.txt")
 train_file = open("train_yolo.txt","a") 
 for sample in train_yolo:
     info = str(sample) + '\n'
     print info
     train_file.write(info)
-
 train_file.close()
 
+if os.path.isfile("test_yolo.txt"):
+    os.unlink("test_yolo.txt")
 test_file = open("test_yolo.txt", "a")
 for sample in test_yolo:
     info = str(sample)+ '\n'
     print info
     test_file.write(info)
-
 test_file.close()
